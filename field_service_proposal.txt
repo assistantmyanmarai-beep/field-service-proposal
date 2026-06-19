@@ -1,0 +1,194 @@
+# AI Field Service Assistant — Proposal Draft (Final)
+
+## 1. Project Overview
+
+EIREE Water Purifier ရဲ့ Installation & Field Service Team (Electrician/Plumber co-partners) အတွက် AI-powered guidance system တစ်ခု တည်ဆောက်ပေးပါမည်။
+
+**ရည်ရွယ်ချက်** — Technician တစ်ယောက်ချင်းစီ customer အိမ်ရောက်တဲ့အခါ၊ installation steps၊ troubleshooting၊ customer-facing explanation တွေအတွက် AI ဆီကို real-time consult လုပ်နိုင်ပြီး၊ Client (Owner) က technician တစ်ယောက်ချင်းစီရဲ့ work history ကို customer/job အလိုက် ခွဲခြားပြီး review လုပ်နိုင်အောင် system ဖန်တီးပေးပါမည်။
+
+---
+
+## 2. Two-System Architecture
+
+### System 1 — Field Service Assistant (Technician အတွက်)
+```
+Platform: Telegram Group (Job/Customer 
+          အလိုက် Topic ခွဲထားသည်)
+Users: Technician အားလုံး
+```
+
+**Features:**
+- Job/Customer တစ်ခုချင်းစီအလိုက် Topic သီးခြားစီ — history မရောစေရန်
+- Installation step-by-step guide (AI)
+- Photo/Video ပို့ပြီး "ဒါမှန်လား" မေးနိုင်ခြင်း
+- AI က Knowledge Base အပေါ်အခြေခံပြီး တိကျသော လမ်းညွှန်ပေးခြင်း
+- Customer ကို ရှင်းမပြတတ်တဲ့အခါ AI ဆီ ပြန်မေးနိုင်ခြင်း
+- "Job Complete" ရိုက်ထည့်ရင် Topic auto-archive
+
+### System 2 — Admin Management Tool (Client/Owner အတွက်)
+```
+Platform: Telegram (Private Chat)
+Users: Client/Owner only
+```
+
+**Commands:**
+- `/neworder` — Order/Job အသစ် ထည့်သွင်းခြင်း (guided, button-based)
+- `/addproduct` — Product Knowledge Base ထည့်ခြင်း (steps, warnings, reference photos)
+- `/editproduct` — Knowledge Base ပြင်ဆင်ခြင်း
+- `/myreports` — Job status overview
+
+---
+
+## 3. Workflow — Order to Completion
+
+```
+Step 1 — Admin Tool ကနေ Order အသစ် ထည့်
+         (Customer name, phone, product, address)
+              ↓
+Step 2 — System က Job Code auto-generate
+         (ဥပမာ: JOB-2026-001)
+              ↓
+Step 3 — Field Assistant ထဲမှာ Topic 
+         auto-create ("JOB-2026-001 — Customer Name")
+              ↓
+Step 4 — Technician — assigned job list ကြည့်ပြီး
+         Topic ထဲ ဝင်
+              ↓
+Step 5 — Technician — AI ဆီ installation guide 
+         မေး၊ photo/video ပို့ပြီး verify ခံ
+              ↓
+Step 6 — Job ပြီးရင် "JOB COMPLETE" ရိုက်
+              ↓
+Step 7 — Topic auto-archive, status update
+              ↓
+Step 8 — Client — completed job history ကြည့်နိုင်
+```
+
+---
+
+## 4. AI Capability — Knowledge Base Driven
+
+AI Agent သည် —
+- Product တစ်ခုချင်းစီအတွက် ကြိုတင်ပြင်ဆင်ထားသော installation guide၊ pipe/connection type၊ common mistakes စသည်တို့ကို Knowledge Base အဖြစ် training ပေးထားမည်
+- Technician ပို့သော photo/video ကို Knowledge Base ထဲက reference image များနှင့် နှိုင်းယှဉ်ပြီး feedback ပေးမည်
+- AI က ရှင်းရှင်းလင်းလင်း မမြင်ရပါက ခန့်မှန်း မဖြေဘဲ — ပိုနီးကပ်စွာ ထပ်မံ ဓာတ်ပုံ/ဗီဒီယို ရိုက်ပေးရန် တောင်းဆိုမည် (Accuracy-first design)
+
+**Note:** EIREE Water Purifier သည် Zero Electricity system ဖြစ်သောကြောင့် main risk category မှာ pipe/water connection accuracy ဖြစ်ပါသည်။
+
+---
+
+## 5. Data & Record Keeping Architecture
+
+```
+Job/Order Database — Job code, customer info, 
+                      status, full history
+                      (Cloud Database)
+
+Knowledge Base — Product installation guides
+                  (Cloud Database)
+
+Reference Photos/Videos — Product အလိုက် 
+                           correct installation 
+                           examples
+                           (Cloud Storage)
+
+Job Photos/Videos — Before/After installation 
+                     photos, job code အလိုက် 
+                     organized
+                     (Cloud Storage)
+
+Client-facing Report — Order/Job list ကို 
+                        spreadsheet format ဖြင့် 
+                        Client အလွယ်တကူ 
+                        ကြည့်ရှု/export လုပ်နိုင်ရန်
+```
+
+---
+
+## 6. Note — Dashboard အကြောင်း
+
+Phase 1 တွင် visual Dashboard ကို ထည့်သွင်းမထားသေးပါ — Budget သတ်မှတ်ချက် ပိုမိုတိကျစွာ ဆွေးနွေးပြီးမှသာ Phase 2 အဖြစ် ထည့်သွင်းရန် စဉ်းစားထားပါသည်။
+
+Dashboard မပါသော်လည်း — **Telegram-based system** ကို Client အတွက် အဆင်ပြေအောင်၊ Job/Order list ကို လွယ်ကူစွာ ကြည့်ရှုနိုင်အောင် ဒီဇိုင်းထုတ်ပေးထားပါသည်။ Admin Tool တစ်ခုတည်းကနေ Order ထည့်ခြင်း၊ Knowledge Base Manage ခြင်း၊ Report ကြည့်ခြင်း — အားလုံး လုပ်ဆောင်နိုင်ပါသည်။
+
+Dashboard ထည့်သွင်းလိုပါက ထပ်ဆောင်း setup cost ရှိမည်ဖြစ်ပြီး — Phase 2 အနေနဲ့ သီးခြား quote ပေးပါမည်။
+
+---
+
+## 7. Pricing
+
+### Setup Fee (One-time)
+
+```
+600,000 MMK  →  400,000 MMK
+(Returning Client Rate)
+```
+
+EIREE Sales Agent Bot project တွင် ယုံကြည်စွာ ပူးပေါင်းခဲ့ပါသည့်အတွက် ဤ project အတွက် special rate ကမ်းလှမ်းပါသည်။
+
+### Monthly Service Fee
+
+```
+150,000 MMK / လ
+```
+
+ပါဝင်သည့်အရာများ —
+- Dedicated Server Hosting & Maintenance
+- System 2 ခုလုံး Ongoing Support
+- Bug Fix & Updates
+- Knowledge Base Update Support
+
+### AI Usage Cost
+
+```
+Actual Usage Based
+(ခန့်မှန်း — 5,000-15,000 MMK / လ)
+```
+
+လစဉ် actual usage report ပြသမည်။
+
+---
+
+### Pricing ကွာခြားချက် ရှင်းလင်းချက်
+
+EIREE Sales Agent Bot အတွက် Assistant Myanmar AI ၏ ပိုင်ဆိုင်သော server ပေါ်တွင် run ထားသဖြင့် ထပ်ဆောင်း server cost မရှိခဲ့ပါ။ ထို့ကြောင့် monthly fee ကို fixed မထားခဲ့ဘဲ AI usage cost ပေါ်မူတည်၍သာ တောင်းခံခဲ့ပါသည်။
+
+ဤ Field Service Assistant project အတွက်မူ —
+- **Dedicated server** သီးခြားလိုအပ်ပါသည် (data security, performance အတွက်)
+- **System architecture** ပိုမိုရှုပ်ထွေးပြီး (Two-system setup, Job-based organization, Photo/Video analysis)
+- **Ongoing server maintenance** တာဝန်ယူမှု ပိုမိုကြီးမားပါသည်
+
+ထို့ကြောင့် Monthly Service Fee ကို fixed rate အဖြစ် သတ်မှတ်ထားပါသည်။
+
+---
+
+## 8. Phase 1 Scope vs Future
+
+**Phase 1 — Included:**
+- Two-system setup (Field Assistant + Admin Tool)
+- Job-based Topic organization
+- AI installation guidance (text + photo/video)
+- Knowledge Base management
+- Record keeping & Client-facing reports
+
+**Phase 2 — Future Consideration:**
+- Full visual Dashboard
+- Advanced analytics/reporting
+- Multi-region team management
+
+---
+
+## 9. Client Requirements (ပေးရမည့်အရာများ)
+
+- Product installation guides (text format)
+- Reference photos/videos (correct installation examples)
+- Common mistakes/troubleshooting list
+- Technician list (Telegram contacts)
+
+---
+
+## 10. Risk & Limitation Disclosure
+
+- AI guidance သည် reference tool တစ်ခု ဖြစ်ပြီး၊ critical installation steps များတွင် technician ကိုယ်တိုင် judgment ပါ ထည့်သွင်းစဉ်းစားသင့်ပါသည်
+- Video/Photo analysis accuracy သည် image quality (lighting, angle) ပေါ် မူတည်ပါသည်
+- Knowledge Base ပြည့်စုံလေ AI accuracy ကောင်းလေ ဖြစ်ပါသည်
